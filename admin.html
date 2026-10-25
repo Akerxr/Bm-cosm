@@ -51,7 +51,7 @@
     </div>
   </div>
 
-  <!-- محتوى الداشبورد الرئيسي (يظهر بعد كلمة المرور الصحيحة) -->
+  <!-- محتوى الداشبورد الرئيسي -->
   <div id="dashboard-content">
     <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="onFormSubmit()"></iframe>
 
@@ -118,7 +118,6 @@
     }
   }
 
-  // السماح بالضغط على زر Enter للتحقق من الباسورد مباشرة
   document.getElementById("auth-password").addEventListener("keypress", function(e) {
     if (e.key === "Enter") checkPassword();
   });
@@ -162,6 +161,12 @@
   }
 
   function startLoading() {
+    const submitBtn = document.getElementById("submit-btn-elem");
+    if (submitBtn.disabled) return false;
+    submitBtn.disabled = true;
+    submitBtn.style.opacity = "0.6";
+    submitBtn.innerText = "جاري الحفظ والنشر... ⏳";
+
     const msg = document.getElementById("msg");
     msg.style.color = "#d81b60";
     msg.innerText = "جاري حفظ وتحديث البيانات...";
@@ -185,7 +190,12 @@
     document.getElementById("form-action").value = "add";
     document.getElementById("product-id").value = "";
     document.getElementById("form-title").innerText = "🎀 إضافة منتج جديد";
-    document.getElementById("submit-btn-elem").innerText = "حفظ ونشر المنتج 🚀";
+    
+    const submitBtn = document.getElementById("submit-btn-elem");
+    submitBtn.disabled = false;
+    submitBtn.style.opacity = "1";
+    submitBtn.innerText = "حفظ ونشر المنتج 🚀";
+
     document.getElementById("cancel-btn-elem").style.display = "none";
     document.getElementById("msg").innerText = "";
     isSubmitting = false;
